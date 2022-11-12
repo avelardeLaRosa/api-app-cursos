@@ -19,6 +19,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,15 +35,19 @@ public class UsuarioServiceImpl implements IUsuarioService {
     private final IDistritoRepository distritoRepository;
     private final IRolRepository rolRepository;
 
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
 
 
     @Autowired
     public UsuarioServiceImpl(IUsuarioRepository usuarioRepository, IDistritoRepository distritoRepository, IRolRepository rolRepository) {
         this.usuarioRepository = usuarioRepository;
-
         this.distritoRepository = distritoRepository;
         this.rolRepository = rolRepository;
     }
+
+
+
 
     @Override
     public UsuarioDTO guardar(UsuarioDTO usuarioDTO) {
@@ -75,7 +81,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
         u.setDni(request.getDni());
         u.setEmail(request.getEmail());
         u.setTelefono(request.getTelefono());
-        u.setPassword(request.getPassword());
+        String encorderPassword = this.passwordEncoder.encode(request.getPassword());
+        u.setPassword(encorderPassword);
         u.setDistrito(distrito);
         u.setRol(rol);
         u.setStatus(Constantes.CREATED_STATUS);
