@@ -87,8 +87,15 @@ public class DepartamentoServiceImpl implements IDepartamentoService {
         DepartamentoDTO departamentoDTO = new DepartamentoDTO();
         departamentoDTO.setId(d.getId());
         departamentoDTO.setDescripcion(d.getDescripcion());
-        List<ProvinciaDTO> provincias = ObjectMapperUtils.mapAll(d.getProvincias(),ProvinciaDTO.class);
-        departamentoDTO.setProvincia(provincias);
+       /* List<ProvinciaDTO> provincias = d.getProvincias().stream().map(
+                p -> {
+                    ProvinciaDTO provinciaDTO = new ProvinciaDTO();
+                    provinciaDTO.setId(p.getId());
+                    provinciaDTO.setDescripcion(p.getDescripcion());
+                    return provinciaDTO;
+                }
+        ).collect(Collectors.toList());
+        departamentoDTO.setProvincia(provincias);*/
         return departamentoDTO;
     }
 

@@ -13,5 +13,5 @@ public class DepartamentoDTO {
 
     private int id;
     private String descripcion;
-    private List<ProvinciaDTO> provincia = new ArrayList<>();
+    //private List<ProvinciaDTO> provincia = new ArrayList<>();
 }
