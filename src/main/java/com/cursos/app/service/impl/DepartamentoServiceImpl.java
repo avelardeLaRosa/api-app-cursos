@@ -71,7 +71,7 @@ public class DepartamentoServiceImpl implements IDepartamentoService {
         Paginacion paginacion =  new Paginacion();
         paginacion.setPageNumber(departamentos.getNumber());
         paginacion.setPageSize(departamentos.getSize());
-        paginacion.setClassBody(contenido);
+        paginacion.setData(contenido);
         paginacion.setTotalElements(departamentos.getTotalElements());
         paginacion.setTotalPages(departamentos.getTotalPages());
         paginacion.setLastRow(departamentos.isLast());

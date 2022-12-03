@@ -12,4 +12,12 @@ public class Constantes {
     public final static String PAGE_SIZE = "10";
     public final static String DEFAULT_ORDER_BY = "id";
     public final static String DEFAULT_SORT_BY = "ASC";
+
+
+
+    public final static String PARAM_PAGE_NUMBER = "pageNum";
+    public final static String PARAM_PAGE_SIZE = "pageSize";
+    public final static String PARAM_ORDER_BY = "orderBy";
+    public final static String PARAM_SORT_BY = "sortBy";
+
 }

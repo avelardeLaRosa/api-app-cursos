@@ -70,7 +70,7 @@ public class RolServiceImpl implements IRolService {
         Paginacion paginacion =  new Paginacion();
         paginacion.setPageNumber(roles.getNumber());
         paginacion.setPageSize(roles.getSize());
-        paginacion.setClassBody(contenido);
+        paginacion.setData(contenido);
         paginacion.setTotalElements(roles.getTotalElements());
         paginacion.setTotalPages(roles.getTotalPages());
         paginacion.setLastRow(roles.isLast());

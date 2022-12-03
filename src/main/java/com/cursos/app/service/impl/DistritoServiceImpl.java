@@ -70,7 +70,7 @@ public class DistritoServiceImpl implements IDistritoService {
         Paginacion paginacion =  new Paginacion();
         paginacion.setPageNumber(distritos.getNumber());
         paginacion.setPageSize(distritos.getSize());
-        paginacion.setClassBody(contenido);
+        paginacion.setData(contenido);
         paginacion.setTotalElements(distritos.getTotalElements());
         paginacion.setTotalPages(distritos.getTotalPages());
         paginacion.setLastRow(distritos.isLast());

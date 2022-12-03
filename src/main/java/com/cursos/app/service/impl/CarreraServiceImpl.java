@@ -70,7 +70,7 @@ public class CarreraServiceImpl implements ICarreraService {
         Paginacion paginacion =  new Paginacion();
         paginacion.setPageNumber(carreras.getNumber());
         paginacion.setPageSize(carreras.getSize());
-        paginacion.setClassBody(contenido);
+        paginacion.setData(contenido);
         paginacion.setTotalElements(carreras.getTotalElements());
         paginacion.setTotalPages(carreras.getTotalPages());
         paginacion.setLastRow(carreras.isLast());

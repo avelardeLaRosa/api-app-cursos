@@ -156,16 +156,18 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
     @Override
     public List<UsuarioDTO> obtener(int pageNum, int pageSize) {
+
         Pageable pageable = PageRequest.of(pageNum, pageSize);
         Page<UsuarioEntity> usuarios = usuarioRepository.getUsuarioEntities(pageable,Constantes.CREATED_STATUS);
         List<UsuarioEntity> listaUsuarios = usuarios.getContent();
         return listaUsuarios.stream().map(this::mapDTO).collect(Collectors.toList());
+
     }
     @Override
     public Paginacion obtenerUsuarios(int pageNum, int pageSize, String orderBy, String sortDir) {
         Sort sort = ordenarPor(orderBy,sortDir);
         Pageable pageable = PageRequest.of(pageNum,pageSize,sort);
-        Page<UsuarioEntity> usuarios = usuarioRepository.findAll(pageable);
+        Page<UsuarioEntity> usuarios = usuarioRepository.getUsuarioEntities(pageable,Constantes.CREATED_STATUS);
         List<UsuarioEntity> listaUsuarios = usuarios.getContent();
         List<UsuarioDTO> contenido = listaUsuarios.stream().map(
                 paginacion -> mapDTO(paginacion)).collect(Collectors.toList());
@@ -173,7 +175,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
         Paginacion paginacion =  new Paginacion();
         paginacion.setPageNumber(usuarios.getNumber());
         paginacion.setPageSize(usuarios.getSize());
-        paginacion.setClassBody(contenido);
+        paginacion.setData(contenido);
         paginacion.setTotalElements(usuarios.getTotalElements());
         paginacion.setTotalPages(usuarios.getTotalPages());
         paginacion.setLastRow(usuarios.isLast());

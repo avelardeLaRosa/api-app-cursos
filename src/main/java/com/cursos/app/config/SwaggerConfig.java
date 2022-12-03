@@ -2,6 +2,7 @@ package com.cursos.app.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -21,7 +22,21 @@ public class SwaggerConfig {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.app_cursos")).paths(PathSelectors.any())
-                .build();
+                .build()
+                .apiInfo(getApiInfo());
+    }
+
+    private ApiInfo getApiInfo() {
+        return new ApiInfo(
+                "API APP-CURSOS",
+                "Servicio Rest para el curso de DAWII",
+                "1.0",
+                "https://github.com/avelardeLaRosa/api-app-cursos",
+                new Contact("Equipo Cibertec", "https://www.linkedin.com/in/alexander-junior-velarde-la-rosa-417420a5/", "avelarde@gmail.com"),
+                "LICENSE",
+                "LICENSE URL",
+                Collections.emptyList()
+        );
     }
 
 
