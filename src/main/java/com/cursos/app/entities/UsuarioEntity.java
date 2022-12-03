@@ -6,7 +6,9 @@ import com.cursos.app.util.MapDTO;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Data
@@ -40,8 +42,11 @@ public class UsuarioEntity extends AuditoryEntity {
     @JoinColumn(name = "id_distrito")
     private DistritoEntity distrito;
 
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "usuario")
+    private List<MatriculaEntity> matriculas = new ArrayList<>();
 
-    @OneToOne(orphanRemoval = true,fetch = FetchType.LAZY)
+
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_rol")
     private RolEntity rol;
 

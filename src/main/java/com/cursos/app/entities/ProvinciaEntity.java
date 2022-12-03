@@ -23,7 +23,7 @@ public class ProvinciaEntity {
     @JoinColumn(name = "id_departamento")
     private DepartamentoEntity departamento;
 
-    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "provincia",orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "provincia")
     private List<DistritoEntity> distritos = new ArrayList<>();
 
 

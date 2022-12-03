@@ -20,6 +20,6 @@ public class DepartamentoEntity {
     private String descripcion;
 
     @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "departamento")
-    List<ProvinciaEntity> provincias = new ArrayList<>();
+    private List<ProvinciaEntity> provincias = new ArrayList<>();
 
 }
