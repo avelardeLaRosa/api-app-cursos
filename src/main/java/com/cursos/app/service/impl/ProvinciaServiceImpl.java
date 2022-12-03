@@ -58,7 +58,7 @@ public class ProvinciaServiceImpl implements IProvinciaService {
         provinciaDTO.setId(provincia.getId());
         provinciaDTO.setDescripcion(provincia.getDescripcion());
         provinciaDTO.setDepartamento(provincia.getDepartamento().getDescripcion());
-        List<DistritoDTO> distritoDTOS = ObjectMapperUtils.mapAll(provincia.getDistritos(), DistritoDTO.class);
+        //List<DistritoDTO> distritoDTOS = ObjectMapperUtils.mapAll(provincia.getDistritos(), DistritoDTO.class);
         //provinciaDTO.setDistritos(distritoDTOS);
         return provinciaDTO;
     }

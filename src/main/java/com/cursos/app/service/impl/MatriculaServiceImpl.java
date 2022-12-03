@@ -56,6 +56,8 @@ public class MatriculaServiceImpl implements IMatriculaService {
         MatriculaEntity matricula = new MatriculaEntity();
         matricula.setCode(CodeProvider.generateCode(Constantes.DETALLE_MATRICULA,detalleMatriculaRepository.count()+1,Constantes.LENGTH_CODE));
         matricula.setUsuario(optionalUsuario.get());
+        matricula.setStatus(Constantes.CREATED_STATUS);
+        matricula.setCreateDate(Date.getCurrent(AdminTimeZone.TIME_ZONE_DEFAULT));
         matricula.setDetalles(null);
 
         MatriculaEntity matricula1 = matriculaRepository.save(matricula);
@@ -78,6 +80,7 @@ public class MatriculaServiceImpl implements IMatriculaService {
                     DetalleMatriculaEntity m = new DetalleMatriculaEntity();
                     m.setId(d.getId());
                     m.setCreateDate(Date.getCurrent(AdminTimeZone.TIME_ZONE_DEFAULT));
+                    m.setStatus(Constantes.CREATED_STATUS);
                     m.setCantidad(d.getCantidad());
                     m.setTotal(d.getTotal());
                     m.setCurso(curso);
@@ -109,7 +112,8 @@ public class MatriculaServiceImpl implements IMatriculaService {
 
     @Override
     public MatriculaResponse actualizar(MatriculaDTO matriculaDTO) {
-        return null;
+
+       return null;
     }
 
     @Override

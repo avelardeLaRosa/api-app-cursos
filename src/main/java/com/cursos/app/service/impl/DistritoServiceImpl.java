@@ -1,13 +1,13 @@
 package com.cursos.app.service.impl;
 
 import com.cursos.app.dto.DistritoDTO;
-import com.cursos.app.dto.UsuarioDTO;
+import com.cursos.app.dto.DistritoResponse;
 import com.cursos.app.entities.DistritoEntity;
-import com.cursos.app.entities.UsuarioEntity;
+import com.cursos.app.entities.ProvinciaEntity;
 import com.cursos.app.repository.IDistritoRepository;
+import com.cursos.app.repository.IProvinciaRepository;
 import com.cursos.app.rest.response.Paginacion;
 import com.cursos.app.service.IDistritoService;
-import com.cursos.app.util.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,17 +23,41 @@ import java.util.stream.Collectors;
 public class DistritoServiceImpl implements IDistritoService {
 
     private final IDistritoRepository distritoRepository;
+    private final IProvinciaRepository provinciaRepository;
 
     @Autowired
-    public DistritoServiceImpl(IDistritoRepository distritoRepository) {
+    public DistritoServiceImpl(IDistritoRepository distritoRepository, IProvinciaRepository provinciaRepository) {
         this.distritoRepository = distritoRepository;
+        this.provinciaRepository = provinciaRepository;
     }
 
     @Override
     public DistritoDTO guardar(DistritoDTO distritoDTO) {
+
         return null;
     }
 
+
+    @Override
+    public DistritoDTO guardar(DistritoResponse distritoResponse) {
+
+        Optional<DistritoEntity> distrito = distritoRepository.findByDescripcion(distritoResponse.getDescripcion());
+        if(distrito.isPresent()){
+            return null;
+        }
+        Optional<ProvinciaEntity> optionalProvincia = provinciaRepository.findById(distritoResponse.getProvincia());
+        DistritoEntity distrito1 = new DistritoEntity();
+        distrito1.setDescripcion(distritoResponse.getDescripcion());
+        distrito1.setProvincia(optionalProvincia.get());
+
+        DistritoEntity distrito2 = distritoRepository.save(distrito1);
+
+        DistritoDTO distritoDTO = new DistritoDTO();
+        distritoDTO.setId(distrito2.getId());
+        distritoDTO.setDescripcion(distrito2.getDescripcion());
+        distritoDTO.setProvincia(distrito2.getProvincia().getDescripcion());
+        return distritoDTO;
+    }
     @Override
     public DistritoDTO actualizar(DistritoDTO distritoDTO) {
         return null;
@@ -41,21 +65,26 @@ public class DistritoServiceImpl implements IDistritoService {
 
     @Override
     public DistritoDTO buscarPorId(int id) {
+        return null;
+    }
+
+    @Override
+    public DistritoResponse getById(int id){
         Optional<DistritoEntity> optional = distritoRepository.findById(id);
         if(optional.isEmpty()){
             return null;
         }
         DistritoEntity distrito = optional.get();
-        DistritoDTO distritoDTO = mapToList(distrito);
+        DistritoResponse distritoDTO = new DistritoResponse();
+        distritoDTO.setId(distritoDTO.getId());
+        distritoDTO.setDescripcion(distritoDTO.getDescripcion());
+        distritoDTO.setProvincia(distrito.getProvincia().getId());
         return distritoDTO;
     }
 
     @Override
     public List<DistritoDTO> obtener(int pageNum, int pageSize) {
-        Pageable pageable = PageRequest.of(pageNum, pageSize);
-        Page<DistritoEntity> distritos = distritoRepository.findAll(pageable);
-        List<DistritoEntity> listaDistritos = distritos.getContent();
-        return listaDistritos.stream().map(this::mapToList).collect(Collectors.toList());
+        return null;
     }
 
     @Override
@@ -65,7 +94,13 @@ public class DistritoServiceImpl implements IDistritoService {
         Page<DistritoEntity> distritos = distritoRepository.findAll(pageable);
         List<DistritoEntity> listaDistritos = distritos.getContent();
         List<DistritoDTO> contenido = listaDistritos.stream().map(
-                paginacion -> mapToList(paginacion)).collect(Collectors.toList());
+                paginacion -> {
+                    DistritoDTO dto = new DistritoDTO();
+                    dto.setId(paginacion.getId());
+                    dto.setDescripcion(paginacion.getDescripcion());
+                    dto.setProvincia(paginacion.getProvincia().getDescripcion());
+                    return dto;
+                }).collect(Collectors.toList());
 
         Paginacion paginacion =  new Paginacion();
         paginacion.setPageNumber(distritos.getNumber());
@@ -88,14 +123,7 @@ public class DistritoServiceImpl implements IDistritoService {
         return sort;
     }
 
-    public DistritoDTO mapToList(DistritoEntity d){
-        DistritoDTO distritoDTO = new DistritoDTO();
-        distritoDTO.setId(d.getId());
-        distritoDTO.setDescripcion(d.getDescripcion());
-        distritoDTO.setProvincia(d.getProvincia().getDescripcion());
 
-        return distritoDTO;
-    }
 
 
 }

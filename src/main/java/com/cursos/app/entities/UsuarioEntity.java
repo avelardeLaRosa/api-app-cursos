@@ -1,13 +1,10 @@
 package com.cursos.app.entities;
 
-import com.cursos.app.dto.UsuarioDTO;
 import com.cursos.app.util.AuditoryEntity;
-import com.cursos.app.util.MapDTO;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity

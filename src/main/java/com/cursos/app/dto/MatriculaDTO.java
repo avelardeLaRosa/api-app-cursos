@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MatriculaDTO {
+public class MatriculaDTO extends AuditoryDTO {
 
     private int id;
 

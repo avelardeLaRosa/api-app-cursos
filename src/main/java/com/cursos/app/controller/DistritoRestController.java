@@ -1,11 +1,11 @@
 package com.cursos.app.controller;
 
-import com.cursos.app.dto.DistritoDTO;
-import com.cursos.app.dto.UsuarioDTO;
+import com.cursos.app.dto.*;
 import com.cursos.app.expeciones.Messages;
 import com.cursos.app.rest.response.ApiResponse;
 import com.cursos.app.rest.response.Paginacion;
 import com.cursos.app.service.IDistritoService;
+import com.cursos.app.service.IProvinciaService;
 import com.cursos.app.util.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class DistritoRestController {
 
     private final IDistritoService distritoService;
+    private final IProvinciaService provinciaService;
 
     @Autowired
-    public DistritoRestController(IDistritoService distritoService) {
+    public DistritoRestController(IDistritoService distritoService, IProvinciaService provinciaService) {
         this.distritoService = distritoService;
+        this.provinciaService = provinciaService;
     }
 
     @GetMapping
@@ -35,4 +37,28 @@ public class DistritoRestController {
         response.success(Messages.OK.getCode(),Messages.OK.getMessage(),distritos);
         return new ResponseEntity<>(response,response.getCode());
     }
+
+    @PostMapping
+    public ResponseEntity<ApiResponse<DistritoDTO>> guardar(
+            @RequestBody DistritoResponse distritoResponse
+    ){
+
+        ApiResponse response = new ApiResponse();
+
+        ProvinciaDTO provinciaDTO = provinciaService.buscarPorId(distritoResponse.getProvincia());
+        if(provinciaDTO==null){
+            response.failed(Messages.PROVINCIA_NOT_FOUND.getCode(), Messages.PROVINCIA_NOT_FOUND.getMessage());
+            return new ResponseEntity<>(response,response.getCode());
+        }
+
+        DistritoDTO distritoDTO = distritoService.guardar(distritoResponse);
+        if(distritoDTO==null){
+            response.failed(Messages.DISTRIC_EXISTS.getCode(), Messages.DISTRIC_EXISTS.getMessage());
+            return new ResponseEntity<>(response,response.getCode());
+        }
+        response.success(Messages.CREATED.getCode(), Messages.CREATED.getMessage(),distritoDTO);
+        return new ResponseEntity<>(response,response.getCode());
+    }
+
+
 }
