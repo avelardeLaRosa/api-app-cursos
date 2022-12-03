@@ -43,53 +43,50 @@ public class CursoServiceImpl implements ICursoService {
     }
 
     @Override
-    public ApiResponse<CursoDTO> guardar(CursoRequest cursoRequest) {
+    public CursoDTO guardar(CursoRequest cursoRequest) {
+
+
+        Optional<CarreraEntity> optionalCarrera = carreraRepository.findById(cursoRequest.getCarrera());
+
 
         Optional<CursoEntity> optionalCurso = cursoRepository.findByDescripcion(cursoRequest.getDescripcion());
         if(optionalCurso.isPresent()){
-            return response.failed(Messages.CURSO_EXISTS.getCode(),Messages.CURSO_EXISTS.getMessage());
+            return null;
         }
 
-        Optional<CarreraEntity> optionalCarrera = carreraRepository.findById(cursoRequest.getCarrera());
-        if(optionalCarrera.isEmpty()){
-            return response.failed(Messages.CARRERA_NOT_FOUND.getCode(),Messages.CARRERA_NOT_FOUND.getMessage());
-        }
 
-        CursoEntity curso = new CursoEntity();
-        curso.setCode(CodeProvider.generateCode(Constantes.CURSO,cursoRepository.count()+1,Constantes.LENGTH_CODE));
-        curso.setStatus(Constantes.CREATED_STATUS);
-        curso.setDescripcion(cursoRequest.getDescripcion());
-        curso.setCreditos(cursoRequest.getCreditos());
-        curso.setPrecio(cursoRequest.getPrecio());
-        curso.setCarrera(optionalCarrera.get());
-        curso.setCreateDate(Date.getCurrent(AdminTimeZone.TIME_ZONE_DEFAULT));
+                CursoEntity curso = new CursoEntity();
+                curso.setCode(CodeProvider.generateCode(Constantes.CURSO, cursoRepository.count() + 1, Constantes.LENGTH_CODE));
+                curso.setStatus(Constantes.CREATED_STATUS);
+                curso.setDescripcion(cursoRequest.getDescripcion());
+                curso.setCreditos(cursoRequest.getCreditos());
+                curso.setPrecio(cursoRequest.getPrecio());
+                curso.setCarrera(optionalCarrera.get());
+                curso.setCreateDate(Date.getCurrent(AdminTimeZone.TIME_ZONE_DEFAULT));
 
 
-        CursoEntity nuevoCurso = cursoRepository.save(curso);
+                CursoEntity nuevoCurso = cursoRepository.save(curso);
 
-        CursoDTO dto = new CursoDTO();
-        dto.setId(nuevoCurso.getId());
-        dto.setCode(nuevoCurso.getCode());
-        dto.setDescripcion(nuevoCurso.getDescripcion());
-        dto.setCreditos(nuevoCurso.getCreditos());
-        dto.setPrecio(nuevoCurso.getPrecio());
-        dto.setCarrera(nuevoCurso.getCarrera().getDescripcion());
+                CursoDTO dto = new CursoDTO();
+                dto.setId(nuevoCurso.getId());
+                dto.setCode(nuevoCurso.getCode());
+                dto.setDescripcion(nuevoCurso.getDescripcion());
+                dto.setCreditos(nuevoCurso.getCreditos());
+                dto.setPrecio(nuevoCurso.getPrecio());
+                dto.setCarrera(nuevoCurso.getCarrera().getDescripcion());
 
-        return response.success(Messages.CREATED.getCode(),Messages.CREATED.getMessage(),dto);
-
+        return dto;
     }
 
     @Override
-    public ApiResponse<CursoDTO> actualizar(CursoRequest cursoRequest) {
+    public CursoDTO actualizar(CursoRequest cursoRequest) {
+
+        Optional<CarreraEntity> optionalCarrera = carreraRepository.findById(cursoRequest.getCarrera());
+
 
         Optional<CursoEntity> optionalCurso = cursoRepository.findById(cursoRequest.getId());
         if(optionalCurso.isEmpty()){
-            return response.failed(Messages.CURSO_NOT_FOUND.getCode(),Messages.CURSO_NOT_FOUND.getMessage());
-        }
-
-        Optional<CarreraEntity> optionalCarrera = carreraRepository.findById(cursoRequest.getCarrera());
-        if(optionalCarrera.isEmpty()){
-            return response.failed(Messages.CARRERA_NOT_FOUND.getCode(),Messages.CARRERA_NOT_FOUND.getMessage());
+            return null;
         }
 
         CursoEntity curso = optionalCurso.get();
@@ -108,15 +105,15 @@ public class CursoServiceImpl implements ICursoService {
         dto.setCreditos(nuevoCurso.getCreditos());
         dto.setPrecio(nuevoCurso.getPrecio());
         dto.setCarrera(nuevoCurso.getCarrera().getDescripcion());
-        return response.success(Messages.UPDATED.getCode(),Messages.UPDATED.getMessage(),dto);
+        return dto;
     }
 
     @Override
-    public ApiResponse<CursoDTO> buscarPorId(int id) {
+    public CursoDTO buscarPorId(int id) {
 
         Optional<CursoEntity> optional = cursoRepository.findByIdAndStatus(id,Constantes.CREATED_STATUS);
         if(optional.isEmpty()){
-            return response.failed(Messages.CURSO_NOT_FOUND.getCode(),Messages.CURSO_NOT_FOUND.getMessage());
+            return null;
         }
 
         CursoEntity curso = optional.get();
@@ -127,17 +124,16 @@ public class CursoServiceImpl implements ICursoService {
         dto.setCreditos(curso.getCreditos());
         dto.setPrecio(curso.getPrecio());
         dto.setCarrera(curso.getCarrera().getDescripcion());
-        return response.success(Messages.OK.getCode(),Messages.OK.getMessage(),dto);
-
+        return dto;
     }
 
 
     @Override
-    public ApiResponse<CursoDTO> eliminar(int id) {
+    public CursoDTO eliminar(int id) {
 
         Optional<CursoEntity> optional = cursoRepository.findById(id);
         if(optional.isEmpty()){
-            return response.failed(Messages.CURSO_NOT_FOUND.getCode(),Messages.CURSO_NOT_FOUND.getMessage());
+            return null;
         }
 
         CursoEntity curso = optional.get();
@@ -149,12 +145,13 @@ public class CursoServiceImpl implements ICursoService {
         CursoDTO dto = new CursoDTO();
         dto.setId(c.getId());
         dto.setCode(c.getCode());
+        dto.setStatus(c.getStatus());
         dto.setDescripcion(c.getDescripcion());
         dto.setCreditos(c.getCreditos());
         dto.setPrecio(c.getPrecio());
         dto.setCarrera(c.getCarrera().getDescripcion());
-        return response.success(Messages.DELETED.getCode(),Messages.DELETED.getMessage(),dto);
-    }
+        return dto;
+     }
 
 
 

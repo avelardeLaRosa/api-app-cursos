@@ -21,5 +21,6 @@ public class Constantes {
     public final static String PARAM_SORT_BY = "sortBy";
 
     public final static String CURSO = "CUR";
+    public final static String DETALLE_MATRICULA = "DT";
 
 }

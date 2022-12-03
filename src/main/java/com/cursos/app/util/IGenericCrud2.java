@@ -6,12 +6,12 @@ import java.util.List;
 
 public interface IGenericCrud2<T,D> {
 
-    ApiResponse<T> guardar(D d);
+    T guardar(D d);
 
-    ApiResponse<T> actualizar(D d);
+    T actualizar(D d);
 
-    ApiResponse<T> buscarPorId (int id);
+    T buscarPorId (int id);
 
-    ApiResponse<T> eliminar(int id);
+    T eliminar(int id);
 
 }

@@ -18,6 +18,9 @@ public class MatriculaEntity extends AuditoryEntity {
     @Column(name = "id_matricula")
     private int id;
 
+    @Column(name = "code")
+    private String code;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")
     private UsuarioEntity usuario;

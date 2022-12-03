@@ -15,9 +15,6 @@ public class DetalleMatriculaEntity extends AuditoryEntity {
     @Column(name = "id_detalle")
     private int id;
 
-    @Column(name = "num_matricula")
-    private String code;
-
     @Column(name = "cantidad")
     private int cantidad;
     @Column(name = "precio")

@@ -17,6 +17,7 @@ public enum Messages {
     DISTRICT_NOT_FOUND("Distrito no encontrado", 500),
     CONDITION_NOT_FOUND("Estado no encontrado", 500),
     CURSO_NOT_FOUND("Curso no encontrado", 500),
+    USUARIO_NOT_FOUND("Usuario no encontrado", 500),
     CARRERA_NOT_FOUND("Carrera no encontrada", 500),
     EMAIL_EXISTS("Correo ya ingresado", 500),
     CURSO_EXISTS("Curso ya ingresado", 500),
