@@ -4,7 +4,7 @@ import com.cursos.app.dto.ProvinciaDTO;
 import com.cursos.app.expeciones.Messages;
 import com.cursos.app.rest.response.ApiResponse;
 import com.cursos.app.rest.response.Paginacion;
-import com.cursos.app.service.IProvinciaService;
+import com.cursos.app.service.ICarreraService;
 import com.cursos.app.util.Constantes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,19 +15,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("provincias")
+@RequestMapping("carreras")
 @CrossOrigin("http://localhost:4200/")
-public class ProvinciaRestController {
+public class CarrerasRestController {
 
-    private final IProvinciaService provinciaService;
+    private final ICarreraService carreraService;
 
     @Autowired
-    public ProvinciaRestController(IProvinciaService provinciaService) {
-        this.provinciaService = provinciaService;
+    public CarrerasRestController(ICarreraService carreraService) {
+        this.carreraService = carreraService;
     }
 
+
     @GetMapping
-    public ResponseEntity<ApiResponse<ProvinciaDTO>> getProvincias(
+    public ResponseEntity<ApiResponse<ProvinciaDTO>> getCarreras(
             @RequestParam(value = "pageNum", defaultValue = Constantes.PAGE_NUMBER,required = false) int pageNum,
             @RequestParam(value = "pageSize", defaultValue = Constantes.PAGE_SIZE,required = false) int pageSize,
             @RequestParam(value = "orderBy",defaultValue = Constantes.DEFAULT_ORDER_BY, required = false) String orderBy,
@@ -39,8 +40,8 @@ public class ProvinciaRestController {
         parameters.put("orderBy",orderBy);
         parameters.put("sortBy",sortDir);
         ApiResponse response = new ApiResponse();
-        Paginacion provincias = provinciaService.obtenerProvincias(parameters);
-        response.success(Messages.OK.getCode(), Messages.OK.getMessage(),provincias);
+        Paginacion carreras = carreraService.obtenerCarreras(parameters);
+        response.success(Messages.OK.getCode(), Messages.OK.getMessage(),carreras);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

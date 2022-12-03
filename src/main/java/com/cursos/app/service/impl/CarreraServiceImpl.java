@@ -7,6 +7,7 @@ import com.cursos.app.entities.UsuarioEntity;
 import com.cursos.app.repository.ICarreraRepository;
 import com.cursos.app.rest.response.Paginacion;
 import com.cursos.app.service.ICarreraService;
+import com.cursos.app.util.Constantes;
 import com.cursos.app.util.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -59,9 +61,9 @@ public class CarreraServiceImpl implements ICarreraService {
     }
 
     @Override
-    public Paginacion obtenerCarreras(int pageNum, int pageSize, String orderBy, String sortDir) {
-        Sort sort = ordenarPor(orderBy,sortDir);
-        Pageable pageable = PageRequest.of(pageNum,pageSize,sort);
+    public Paginacion obtenerCarreras(Map<String,Object> parameters) {
+        Sort sort = ordenarPor(parameters.get(Constantes.PARAM_ORDER_BY).toString(),parameters.get(Constantes.PARAM_SORT_BY).toString());
+        Pageable pageable = PageRequest.of(Integer.parseInt(parameters.get(Constantes.PARAM_PAGE_NUMBER).toString()),Integer.parseInt(parameters.get(Constantes.PARAM_PAGE_SIZE).toString()),sort);
         Page<CarreraEntity> carreras = carreraRepository.findAll(pageable);
         List<CarreraEntity> listaCarreras = carreras.getContent();
         List<CarreraDTO> contenido = listaCarreras.stream().map(
