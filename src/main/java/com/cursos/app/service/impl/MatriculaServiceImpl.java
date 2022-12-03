@@ -78,7 +78,7 @@ public class MatriculaServiceImpl implements IMatriculaService {
         List<DetalleMatriculaEntity> detallesMatriculas = matriculaDTO.getDetalles().stream().map(
                 d -> {
                     DetalleMatriculaEntity m = new DetalleMatriculaEntity();
-                    m.setId(d.getId());
+                   // m.setId(d.getId());
                     m.setCreateDate(Date.getCurrent(AdminTimeZone.TIME_ZONE_DEFAULT));
                     m.setStatus(Constantes.CREATED_STATUS);
                     m.setCantidad(d.getCantidad());
@@ -94,7 +94,7 @@ public class MatriculaServiceImpl implements IMatriculaService {
         List<DetalleMatriculaResponse> detalleMatriculaDTOS = detalles.stream().map(
                 dto -> {
                     DetalleMatriculaResponse detalleMatriculaDTO = new DetalleMatriculaResponse();
-                    detalleMatriculaDTO.setId(dto.getId());
+                    //detalleMatriculaDTO.setId(dto.getId());
                     detalleMatriculaDTO.setCantidad(dto.getCantidad());
                     detalleMatriculaDTO.setTotal(dto.getTotal());
                     detalleMatriculaDTO.setCurso(dto.getCurso().getDescripcion());
@@ -103,8 +103,8 @@ public class MatriculaServiceImpl implements IMatriculaService {
         ).collect(Collectors.toList());
 
         MatriculaResponse matriculaDTO1 = new MatriculaResponse();
-        matriculaDTO1.setId(matricula1.getId());
-        matriculaDTO1.setCode(matriculaDTO1.getCode());
+        //matriculaDTO1.setId(matricula1.getId());
+        matriculaDTO1.setCode(matricula1.getCode());
         matriculaDTO1.setUsuario(matricula1.getUsuario().getNombres()+" "+matricula1.getUsuario().getApellidos());
         matriculaDTO1.setDetalles(detalleMatriculaDTOS);
         return matriculaDTO1;

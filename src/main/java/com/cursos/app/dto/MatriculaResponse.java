@@ -10,7 +10,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MatriculaResponse {
 
-    private int id;
+    //private int id;
     private String code;
     private String usuario;
 

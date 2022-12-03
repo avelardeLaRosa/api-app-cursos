@@ -63,7 +63,7 @@ public class UsuarioController {
     ){
         ApiResponse<UsuarioDTO> response = new ApiResponse<>();
 
-        DistritoDTO distritoDTO = distritoService.buscarPorId(request.getDistrito());
+        DistritoResponse distritoDTO = distritoService.getById(request.getDistrito());
         if(distritoDTO==null){
             response.failed(Messages.DISTRICT_NOT_FOUND.getCode(), Messages.DISTRICT_NOT_FOUND.getMessage());
             return new ResponseEntity<>(response,response.getCode());
@@ -91,7 +91,7 @@ public class UsuarioController {
     ){
         ApiResponse<UsuarioDTO> response = new ApiResponse();
 
-        DistritoDTO distritoDTO = distritoService.buscarPorId(usuarioRequest.getDistrito());
+        DistritoResponse distritoDTO = distritoService.getById(usuarioRequest.getDistrito());
         if(distritoDTO==null){
             response.failed(Messages.DISTRICT_NOT_FOUND.getCode(), Messages.DISTRICT_NOT_FOUND.getMessage());
             return new ResponseEntity<>(response,response.getCode());
