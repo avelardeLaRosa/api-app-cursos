@@ -93,8 +93,7 @@ public class DistritoServiceImpl implements IDistritoService {
         distritoDTO.setId(d.getId());
         distritoDTO.setDescripcion(d.getDescripcion());
         distritoDTO.setProvincia(d.getProvincia().getDescripcion());
-        List<UsuarioDTO> usuarios = ObjectMapperUtils.mapAll(distritoDTO.getUsuarios(),UsuarioDTO.class);
-        distritoDTO.setUsuarios(usuarios);
+
         return distritoDTO;
     }
 

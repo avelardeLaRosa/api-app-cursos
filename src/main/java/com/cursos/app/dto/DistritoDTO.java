@@ -13,6 +13,6 @@ public class DistritoDTO {
     private int id;
     private String descripcion;
     private String provincia;
-    private List<UsuarioDTO> usuarios = new ArrayList<>();
+    //private List<UsuarioDTO> usuarios = new ArrayList<>();
 
 }
